@@ -7,9 +7,6 @@ Welcome to the QuickPoll development team! We use a standardized Git workflow to
 We follow a simplified Git Flow model:
 
 - **`main`**: Production code only. Always stable.
-- **`develop`**: Integration branch for features. This is where most work is merged.
-- **`feature/xxx`**: Dedicated branches for new features. Create these from `develop`.
-- **`bugfix/xxx`**: Dedicated branches for fixing bugs.
 
 ## 🛠️ Commit Quality (Husky)
 
