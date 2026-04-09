@@ -33,6 +33,7 @@ model Poll {
   endedAt           DateTime?
 
   questions         Question[]
+  responses         Response[]
 }
 
 model Question {
@@ -50,6 +51,7 @@ model Question {
 model Response {
   id              String   @id @default(uuid())
   pollId          String
+  poll            Poll     @relation(fields: [pollId], references: [id], onDelete: Cascade)
   questionId      String
   question        Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   userId          String?  // Nullable for anonymous mode

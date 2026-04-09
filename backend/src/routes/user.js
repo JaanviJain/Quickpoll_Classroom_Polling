@@ -14,10 +14,15 @@ router.get("/history", authenticate, async (req, res) => {
         poll: {
           select: {
             title: true,
-            questionText: true,
             createdAt: true,
-          }
-        }
+          },
+        },
+        question: {
+          select: {
+            text: true,
+            type: true,
+          },
+        },
       },
       orderBy: { submittedAt: "desc" },
     });
