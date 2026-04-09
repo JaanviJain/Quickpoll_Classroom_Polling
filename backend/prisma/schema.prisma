@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(uuid())
+  email        String     @unique
+  name         String
+  password     String
+  role         String     // "admin", "teacher", "student"
+  createdAt    DateTime   @default(now())
+  
+  polls        Poll[]     @relation("UserPolls")
+  responses    Response[]
+  auditLogs    AuditLog[]
+}
+
+model Poll {
+  id                String     @id @default(uuid())
+  title             String
+  isAnonymous       Boolean    @default(false)
+  isActive          Boolean    @default(false)
+  roomCode          String?    @unique // 6-digit unique code
+  createdById       String
+  createdBy         User       @relation("UserPolls", fields: [createdById], references: [id])
+  createdAt         DateTime   @default(now())
+  startedAt         DateTime?
+  endedAt           DateTime?
+
+  questions         Question[]
+}
+
+model Question {
+  id                String     @id @default(uuid())
+  pollId            String
+  poll              Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  text              String
+  type              String     // "multiple_choice", "true_false", "open_ended"
+  options           String     // JSON string for options array
+  order             Int        @default(0)
+
+  responses         Response[]
+}
+
+model Response {
+  id              String   @id @default(uuid())
+  pollId          String
+  questionId      String
+  question        Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  userId          String?  // Nullable for anonymous mode
+  user            User?    @relation(fields: [userId], references: [id])
+  answerText      String?  // For open ended
+  selectedOption  Int?     // For multiple choice / true-false (index)
+  submittedAt     DateTime @default(now())
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  adminId     String
+  admin       User     @relation(fields: [adminId], references: [id])
+  action      String
+  targetType  String
+  targetId    String?
+  timestamp   DateTime @default(now())
+}
