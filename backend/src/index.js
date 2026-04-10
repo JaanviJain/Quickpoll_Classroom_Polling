@@ -9,6 +9,7 @@ const pollRoutes = require("./routes/polls");
 const roomRoutes = require("./routes/rooms");
 const userRoutes = require("./routes/user");
 const { setupSocketHandlers } = require("./socket");
+const { metricsMiddleware, register } = require("./middleware/metrics");
 
 const PORT = process.env.PORT || 4000;
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:3000";
@@ -26,6 +27,7 @@ const io = new Server(server, {
 // Middleware
 app.use(cors({ origin: CORS_ORIGIN }));
 app.use(express.json());
+app.use(metricsMiddleware);
 
 // Health check
 app.get("/api/health", (req, res) => {
@@ -41,6 +43,16 @@ app.use("/api/user", userRoutes);
 
 // Socket.io handlers
 setupSocketHandlers(io);
+
+// Metrics endpoint for Prometheus
+app.get("/api/metrics", async (req, res) => {
+  try {
+    res.set("Content-Type", register.contentType);
+    res.end(await register.metrics());
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 server.listen(PORT, () => {
   console.log(`QuickPoll backend running on port ${PORT}`);
