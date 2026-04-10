@@ -1,10 +1,7 @@
 pipeline {
     agent any
 
-    tools {
-        // This requires the 'NodeJS' plugin installed in Jenkins
-        nodejs 'node' 
-    }
+
 
     environment {
         CI = 'true'
