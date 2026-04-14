@@ -138,7 +138,7 @@ export default function AdminDashboard() {
           <div className="flex gap-3">
             <button
               onClick={() =>
-                window.open("http://localhost:3001/d/quickpoll-sys", "_blank")
+                window.open("http://localhost:3000/d/quickpoll-sys", "_blank")
               }
               className="btn-secondary flex items-center gap-2 border-accent/20 bg-accent/5 hover:bg-accent/10 text-accent"
             >

@@ -40,17 +40,16 @@ Grafana is the "beautiful face" that turns the data into charts.
     - Find "Grafana" and ensure it is **Started**.
 4.  **Access**: Go to `http://localhost:3000` in your browser.
     *   **Login**: `admin` / `admin`.
-5.  **Change Port** (Recommended): 
-    - Since your frontend uses port 3000, you must change Grafana to **3001**.
-    - Go to `C:\Program Files\GrafanaLabs\grafana\conf\defaults.ini`.
-    - Find `http_port = 3000` and change it to `3001`.
-    - Restart the Grafana service.
+5.  **Access Settings**: 
+    - Your QuickPoll frontend runs on port **3005** by default.
+    - Grafana runs perfectly fine on its default port **3000**.
+    - No port changes are required!
 
 ---
 
 ## 🔗 Step 3: Connect Grafana to Prometheus
 
-1.  In Grafana (`localhost:3001`), go to **Connections -> Data Sources**.
+1.  In Grafana (`localhost:3000`), go to **Connections -> Data Sources**.
 2.  Click **Add data source** and select **Prometheus**.
 3.  Set the URL to: `http://localhost:9090`.
 4.  Click **Save & Test**.

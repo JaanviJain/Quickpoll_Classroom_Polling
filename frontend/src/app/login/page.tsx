@@ -92,7 +92,6 @@ export default function LoginPage() {
                 </label>
                 <Link
                   href="/forgot-password"
-                  name="forgot-password"
                   id="forgot-password"
                   className="text-[10px] font-bold text-primary hover:underline uppercase tracking-wider"
                 >
