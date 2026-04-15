@@ -4,7 +4,8 @@
   "description": "A real-time classroom polling system and event RSVP platform.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha tests/**/*.js",
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
     "prepare": "husky",
     "lint": "npx lint-staged"
   },
@@ -21,9 +22,15 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "eslint": "^10.2.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
+    "mocha": "^11.7.5",
     "prettier": "^3.8.1"
+  },
+  "dependencies": {
+    "chromedriver": "^147.0.2",
+    "selenium-webdriver": "^4.43.0"
   }
 }
